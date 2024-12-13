@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 x-othentic-cli: &othentic-cli
   env_file:
     - path: .env
@@ -10,15 +10,20 @@ x-othentic-cli: &othentic-cli
 services:
   attester:
     <<: *othentic-cli
-    env_file: 
+    env_file:
       - .env
-    command: [
-      "node",
-      "attester",
-      "/ip4/13.127.183.107/tcp/9876/p2p/${OTHENTIC_BOOTSTRAP_ID}",
-      "--avs-webapi",
-      "http://10.8.0.42",
-    ]
+    command:
+      [
+        "node",
+        "attester",
+        "/ip4/13.127.183.107/tcp/9877/p2p/${OTHENTIC_BOOTSTRAP_ID}",
+        "--avs-webapi",
+        "http://10.8.0.42",
+        "--l1-chain",
+        "holesky",
+        "--l2-chain",
+        "base-sepolia",
+      ]
     environment:
       - PRIVATE_KEY=${PRIVATE_KEY_ATTESTER}
       - TASK_PERFORMER=0x0000000000000000000000000000000000000000
@@ -40,5 +45,5 @@ networks:
   p2p:
     driver: bridge
     ipam:
-     config:
-       - subnet: 10.8.0.0/16
+      config:
+        - subnet: 10.8.0.0/16
